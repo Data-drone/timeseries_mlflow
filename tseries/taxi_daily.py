@@ -2,6 +2,13 @@ from tseries.dataset import Dataset
 from pyspark.sql import functions as F
 
 class TaxiDaily(Dataset):
+    """
+    
+    Loads the NYC Taxi dataset 
+
+    TODO - add a self object for time column and column we forecast on
+
+    """
 
     def __init__(self, sparksession):
 
