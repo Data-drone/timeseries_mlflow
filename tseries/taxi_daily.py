@@ -12,7 +12,15 @@ class TaxiDaily(Dataset):
 
     def __init__(self, sparksession):
 
+        """
+        train steps is for at least six months
+        forecast_period is for 14 days
+
+        """
+
         self.sparksession = sparksession
+        self.train_steps = 6*30
+        self.forecast_period = 14
 
     def load_data(self):
 
@@ -29,18 +37,21 @@ class TaxiDaily(Dataset):
                 .sort("pickup_date")
         )
 
-        self.train_data = (
-            self.dataset
-                .select(
-                    F.col("pickup_date").alias("ds"),
-                    F.col("total_rides").alias("y")
-                    )
-                .filter("pickup_date < '2014-07-01'"))
+        self.time_column = 'pickup_date'
+        self.columns_to_predict = ['total_rides', 'total_takings']
 
-        self.test_data = (
-            self.dataset
-                .select(
-                    F.col("pickup_date").alias("ds"),
-                    F.col("total_rides").alias("y")
-                    )
-                .filter("pickup_date >= '2014-07-01'"))
+        #self.train_data = (
+        #    self.dataset
+        #        .select(
+        #            F.col("pickup_date").alias("ds"),
+        #            F.col("total_rides").alias("y")
+        #            )
+        #        .filter("pickup_date < '2014-07-01'"))
+
+        #self.test_data = (
+        #    self.dataset
+        #        .select(
+        #            F.col("pickup_date").alias("ds"),
+        #            F.col("total_rides").alias("y")
+        #            )
+        #        .filter("pickup_date >= '2014-07-01'"))
