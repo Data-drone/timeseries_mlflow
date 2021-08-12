@@ -57,12 +57,13 @@ train, val = starting_dataset.filter("pickup_date < '{0}'".format(split_date)).t
 
 # set the dates to proper series
 train.index = train['pickup_date']
-train.drop(['pickup_date'], axis = 1)
+train = train.drop(['pickup_date'], axis = 1)
 train.sort_index(inplace=True)
 train = train.asfreq('D')
 
 val.index = val['pickup_date']
-val.drop(['pickup_date'], axis = 1)
+val = val.drop(['pickup_date'], axis = 1)
 val.sort_index(inplace=True)
 val = val.asfreq('D')
 
+spark.stop()
