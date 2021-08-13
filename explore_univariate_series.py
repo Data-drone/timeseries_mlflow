@@ -11,7 +11,7 @@ from nbconvert.preprocessors import ExecutePreprocessor
 from setup import start_spark, extract_data
 import os
 
-def create_notebook_exploration(df, setup_data = 'setup.py', 
+def create_notebook_exploration(df, 
                                 output_name = 'test.ipynb',
                                 ):
     """
