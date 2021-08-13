@@ -1,6 +1,6 @@
 #
 # A function to explore a univariate series and generate an exploratory notebook
-#
+# See: https://nbconvert.readthedocs.io/en/latest/execute_api.html
 # 
 #
 
@@ -54,6 +54,13 @@ def create_notebook_exploration(df, setup_data = 'setup.py',
     for column in df.columns:
         value = str(column)
 
+        section_header = inspect.cleandoc("""
+            ## {0} \n
+            Data Exploration
+        """.format(value))
+
+        explore_data.append(nbf.v4.new_markdown_cell(section_header))
+
         explore_script = inspect.cleandoc("""
         # Using plotly.express
         import plotly.express as px
@@ -63,6 +70,14 @@ def create_notebook_exploration(df, setup_data = 'setup.py',
         """.format(value))
 
         explore_data.append(nbf.v4.new_code_cell(explore_script))
+
+        histogram_script = inspect.cleandoc("""
+        fig = px.histogram(train, x='{0}')
+        fig.show()
+        """.format(value))
+
+        explore_data.append(nbf.v4.new_code_cell(histogram_script))
+
 
 
     nb['cells'] = [
