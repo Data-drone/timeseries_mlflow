@@ -6,7 +6,7 @@ from pyspark.sql import functions as F
 import pandas as pd
 
 
-def start_spark():
+def start_spark(sesh_name = "Jupyter Time Series"):
     packages="""io.delta:delta-core_2.12:1.0.0,org.apache.hadoop:hadoop-aws:3.2.0"""
     os.environ['PYSPARK_SUBMIT_ARGS'] = "--packages io.delta:delta-core_2.12:1.0.0,org.apache.hadoop:hadoop-aws:3.2.0 pyspark-shell"
 
@@ -27,7 +27,7 @@ def start_spark():
                 .config("spark.hadoop.fs.s3a.path.style.access", "true") \
                 .config("spark.hadoop.fs.s3a.connection.maximum", "50") \
                 .config("spark.hive.metastore.uris", "thrift://192.168.64.4:9083") \
-                .appName("Jupyter Time Series") \
+                .appName(sesh_name) \
                 .enableHiveSupport() \
                 .getOrCreate()
 
